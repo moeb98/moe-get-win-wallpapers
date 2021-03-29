@@ -3,17 +3,20 @@ param (
     [Parameter(ParameterSetName="Operate", Mandatory=$false)]
     [Parameter(ParameterSetName="Install", Mandatory=$false)]
     [ValidateSet("Portrait", "Landscape")]
-    [string] $Format = "Landscape", # Bilder im Querformat sammeln; "Portrait" = Hochformat
+    # collect pictures in landscape format; for pictures in portrait format, configure this to "Portrait"
+    [string] $Format = "Landscape", 
     [Parameter(ParameterSetName="Install", Mandatory=$true)]
     [switch] $Install,
     [Parameter(ParameterSetName="Uninstall", Mandatory=$true)]
     [switch] $Uninstall
 )
 
-# -------------- Hier bei Bedarf anpassen --------------
-$CollectionFolder = 'lockscreen-pics' # Name des Bilder-Unterordners, wo die Fotos landen sollen
-$SetWallpaper = $true # $true, um den Desktophintergrund neu zu setzen, $false, um nur Bilder zu sammeln
-# ---------------- Ende der Anpassungen ----------------
+# -------------- Configuration area --------------
+# folder to store the wallpaper picture files
+$CollectionFolder = 'lockscreen-pics' 
+# $true, to set the desktop background image, $false, to collect picture files only
+$SetWallpaper = $true 
+# ---------------- End config area ----------------
 
 if($Install) {
     "Installiere ..."
