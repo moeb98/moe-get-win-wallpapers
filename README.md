@@ -24,4 +24,15 @@ you can set this to ```Portrait```.
 
 ## Installation (optional)
 
+When called without any command line arguments, the script will collect
+currently available lockscreen pictures and store them in the
+```CollectionFolder``` just once (!) when called. Called with the
+parameter ```- install``` the script is installed as a scheduled task
+in the Windows operating system. Thus, it will be called continuously
+to collect all provided lockscreen pictures.
+
 ## Deinstallation (optional)
+
+In case, you do not want to continuously collect pictures via the
+scheduled tasks, you can call the script with the command line parameter
+```- uninstall``` to delete it from the scheduled tasks.
