@@ -19,8 +19,8 @@ $SetWallpaper = $true
 # ---------------- End config area ----------------
 
 if($Install) {
-    "Installiere ..."
-    # Dieses Skript als geplante Aufgabe eintragen
+    "Install ..."
+    # install script as scheduled task in Windows on OS level 
     $posh = 'powershell'
     if($PSVersionTable.PSEdition -eq 'Core') {
         $posh = 'pwsh'
@@ -34,30 +34,30 @@ if($Install) {
     $settings = New-ScheduledTaskSettingsSet -Hidden -DontStopIfGoingOnBatteries -DontStopOnIdleEnd -StartWhenAvailable;
     $task = New-ScheduledTask -Action $action -Trigger $trigger -Settings $settings;
     Register-ScheduledTask 'Collect-Lockscreens' -InputObject $task | Out-Null;
-    "Fertig."
+    "Done."
     exit
 }
 
 if($Uninstall) {
-    "Deinstalliere ..."
-    # Geplante Aufgabe löschen
+    "Uninstall ..."
+    # uninstall script from scheduled tasks in Windows
     Unregister-ScheduledTask 'Collect-Lockscreens';
-    "Fertig."
+    "Done."
     exit
 }
 
-# Hier liegen die von Windows heruntergeladenen Lockscreen-Bilder und deren Beschreibungen
+# here we can find the lockscreen pictures and their descriptions as they are downloaded by Windows
 $assetDir = [IO.Path]::Combine($env:LocalAppData, 'Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\Assets')
 $metaDir = [IO.Path]::Combine($env:LocalAppData, 'Packages\Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy\LocalState\ContentManagementSDK\Creatives\338387')
 
-# Kopierte Bilder landen in einem Unterordner des eigenen "Bilder"-Ordners.
+# all copied pictues are stored in a subfolder under the "Pictures" folder (as defined in $CollectionFolder)
 $myPics = [Environment]::GetFolderPath([Environment+SpecialFolder]::MyPictures)
 $lockScreenDir = [IO.Path]::Combine($myPics, $CollectionFolder)
 if(-not (Test-Path $lockScreenDir)) {
     New-Item -Path $lockScreenDir -ItemType Directory | Out-Null
 }
 
-# Alle Dateien >=100 KByte könnten Hintergrundbilder sein. Berechne deren SHA256-Hash.
+# all pictures >=100KB could by lockscreen picture... thus, we calculate their SHA256 hash
 $candidates = Get-ChildItem $assetDir -File | Where-Object Length -ge 100KB
 $hashAlgo = [Security.Cryptography.HashAlgorithm]::Create("SHA256")
 foreach($c in $candidates) {
@@ -67,7 +67,7 @@ foreach($c in $candidates) {
     $c | Add-Member -MemberType NoteProperty -Name 'Hash' -Value $hash
 }
 
-# Bildtitel etc. aus den Metadaten extrahieren ...
+# here we extract title / description and the like from the metadata
 $lockScreenGuess = $null
 foreach($metaFile in (Get-ChildItem $metaDir -Filter *. -File)) {
     $meta = $metaFile | Get-Content | ConvertFrom-Json
