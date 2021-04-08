@@ -90,11 +90,11 @@ foreach($metaFile in (Get-ChildItem $metaDir -Filter *. -File)) {
 <#
                         # --- DEBUG ---
                         $logFile = [IO.Path]::Combine($lockScreenDir, 'Lockscreen.log')
-                        'Datum:      {0}' -f (Get-Date) | Out-File $logFile -Append -Encoding utf8
-                        'Quelldatei: {0}' -f ($imageFile.Name) | Out-File $logFile -Append -Encoding utf8
-                        'Zieldatei:  {0}' -f $fileName | Out-File $logFile -Append -Encoding utf8
-                        'Größe:      {0} x {1}' -f $image.width, $image.height | Out-File $logFile -Append -Encoding utf8
-                        'Metadaten:  {0}' -f $metaFile.Name | Out-File $logFile -Append -Encoding utf8
+                        'Date:        {0}' -f (Get-Date) | Out-File $logFile -Append -Encoding utf8
+                        'Source file: {0}' -f ($imageFile.Name) | Out-File $logFile -Append -Encoding utf8
+                        'Target file: {0}' -f $fileName | Out-File $logFile -Append -Encoding utf8
+                        'Size:        {0} x {1}' -f $image.width, $image.height | Out-File $logFile -Append -Encoding utf8
+                        'Metadata:    {0}' -f $metaFile.Name | Out-File $logFile -Append -Encoding utf8
                         "----------------------------------------------------------`r`n" | Out-File $logFile -Append -Encoding utf8
                         # --- /DEBUG ---
 #>
@@ -110,8 +110,8 @@ if($lockScreenGuess) {
 <#
     # --- DEBUG ---
     $logFile = [IO.Path]::Combine($lockScreenDir, 'Lockscreen.log')
-    'Datum:                       {0}' -f (Get-Date) | Out-File $logFile -Append -Encoding utf8
-    'Wahrscheinlicher Lockscreen: {0}' -f $lockScreenGuess | Out-File $logFile -Append -Encoding utf8
+    'Date:                       {0}' -f (Get-Date) | Out-File $logFile -Append -Encoding utf8
+    'Potential Lockscreen: {0}' -f $lockScreenGuess | Out-File $logFile -Append -Encoding utf8
     "----------------------------------------------------------`r`n" | Out-File $logFile -Append -Encoding utf8
     # --- /DEBUG ---
 #>
