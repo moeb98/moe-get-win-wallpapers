@@ -15,7 +15,7 @@ param (
 # folder to store the wallpaper picture files
 $CollectionFolder = 'lockscreen-pics' 
 # $true, to set the desktop background image, $false, to collect picture files only
-$SetWallpaper = $true 
+$SetWallpaper = $false
 # ---------------- End config area ----------------
 
 if($Install) {
